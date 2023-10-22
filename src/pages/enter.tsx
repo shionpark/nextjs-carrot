@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { cls } from "@/utils";
+import { TAB_E, TAB_P } from "@/constants";
 
 export default function Enter() {
-  const [method, setMethod] = useState<"email" | "phone">("email");
-  const onEmailClick = () => setMethod("email");
-  const onPhoneClick = () => setMethod("phone");
+  const [method, setMethod] = useState<typeof TAB_E | typeof TAB_P>(TAB_E);
+  const onEmailClick = () => setMethod(TAB_E);
+  const onPhoneClick = () => setMethod(TAB_P);
   return (
     <div className="SCREEN flex-col justify-center items-center">
       <h3 className="E_TITLE font-extrabold text-3xl my-16 bg-orange-400 text-center">
@@ -14,23 +16,25 @@ export default function Enter() {
           <h5 className="E_TEXT text-sm text-gray-500 font-medium">
             Enter using:
           </h5>
-          <div className="E_TABS border-b border-black grid mt-8 w-full grid-cols-2">
+          <div className="E_TABS border-b-2 border-gray-300 grid mt-8 w-full grid-cols-2">
             <button
-              className={`pb-4 ${
-                method === "email"
+              className={cls(
+                "pb-4",
+                method === TAB_E
                   ? "font-bold text-orange-400 border-b-2 border-orange-500"
-                  : ""
-              }`}
+                  : "border-transparent hover:text-gray-400 text-gray-500"
+              )}
               onClick={onEmailClick}
             >
               Email
             </button>
             <button
-              className={`pb-4  ${
-                method === "phone"
+              className={cls(
+                "pb-4",
+                method === TAB_P
                   ? "font-bold text-orange-400 border-b-2 border-orange-500"
-                  : ""
-              }`}
+                  : "border-transparent hover:text-gray-400 text-gray-500"
+              )}
               onClick={onPhoneClick}
             >
               Phone
@@ -39,14 +43,14 @@ export default function Enter() {
         </div>
         <form className="E_FORM bg-orange-300">
           <label className="bg-red-200">
-            {method === "email" ? "Email address" : null}
-            {method === "phone" ? "Phone number" : null}
+            {method === TAB_E ? "Email address" : null}
+            {method === TAB_P ? "Phone number" : null}
           </label>
           <div className="bg-yellow-300">
-            {method === "email" ? (
+            {method === TAB_E ? (
               <input className="bg-slate-200" type="email" required />
             ) : null}
-            {method === "phone" ? (
+            {method === TAB_P ? (
               <div>
                 <span>+82</span>
                 <input type="number" required />
@@ -55,7 +59,7 @@ export default function Enter() {
           </div>
           <button>
             {method === "email" ? "Get login link" : null}
-            {method === "phone" ? "Get one-time password" : null}
+            {method === TAB_P ? "Get one-time password" : null}
           </button>
         </form>
         <div className="E_SOCIAL_CONTAINER  flex flex-col justify-center items-center bg-cyan-300">
