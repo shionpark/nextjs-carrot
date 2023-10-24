@@ -7,15 +7,12 @@ export default function Enter() {
   const onEmailClick = () => setMethod(TAB_E);
   const onPhoneClick = () => setMethod(TAB_P);
   return (
-    <div className="SCREEN flex-col justify-center items-center">
-      <h3 className="E_TITLE font-extrabold text-3xl my-16 bg-orange-400 text-center">
+    <div className="SCREEN flex-col px-4 justify-center items-center">
+      <h3 className="E_TITLE font-extrabold text-3xl my-16  text-center">
         Enter to Carrot
       </h3>
-      <div className="E_CONTAINER bg-slate-700 p-2">
-        <div className="E_CLICK_TABS flex flex-col justify-center items-center bg-teal-200">
-          <h5 className="E_TEXT text-sm text-gray-500 font-medium">
-            Enter using:
-          </h5>
+      <div className="E_CONTAINER p-2">
+        <div className="E_CLICK_TABS flex flex-col justify-center items-center">
           <div className="E_TABS border-b-2 border-gray-300 grid mt-8 w-full grid-cols-2">
             <button
               className={cls(
@@ -41,36 +38,48 @@ export default function Enter() {
             </button>
           </div>
         </div>
-        <form className="E_FORM bg-orange-300">
-          <label className="bg-red-200">
+        <form className="FORM_CONTAINER flex flex-col  mt-8">
+          <label className="FORM_LABEL text-sm text-gray-700">
             {method === TAB_E ? "Email address" : null}
             {method === TAB_P ? "Phone number" : null}
           </label>
-          <div className="bg-yellow-300">
+          <div className="FORM_INPUTS  ">
             {method === TAB_E ? (
-              <input className="bg-slate-200" type="email" required />
+              <input
+                className="FORM_INPUT_E appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                type="email"
+                required
+              />
             ) : null}
             {method === TAB_P ? (
-              <div>
-                <span>+82</span>
-                <input type="number" required />
+              <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
+                <span className="FORM_INPUT_P_NUM flex items-center justify-center bg-gray-50 text-gray-00 border border-gray-300 border-r-0 px-3 rounded-l-md text-sm ">
+                  +82
+                </span>
+                <input
+                  className="FORM_INPUT_P w-full appearance-none border border-gray-300 rounded-md rounded-l-none focus:ring-orange-500 focus:border-orange-500"
+                  type="number"
+                  required
+                />
               </div>
             ) : null}
           </div>
-          <button>
+          <button className="FORM_ENTER_BTN bg-orange-500 hover:bg-orange-600 mt-5 py-2 px-4 border border-transparent rounded-md text-white focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
             {method === "email" ? "Get login link" : null}
             {method === TAB_P ? "Get one-time password" : null}
           </button>
         </form>
-        <div className="E_SOCIAL_CONTAINER  flex flex-col justify-center items-center bg-cyan-300">
-          <div>
-            <div />
-            <div>
-              <span>Or enter with</span>
+        <div className="E_SOCIAL_CONTAINER mt-8  ">
+          <div className="E_SOCIAL_TEXT relative">
+            <div className="absolute py-2 w-full border-t border-gray-300" />
+            <div className="relative -top-3 text-center">
+              <span className="bg-white px-2 text-sm text-gray-500">
+                Or enter with
+              </span>
             </div>
           </div>
-          <div className="E_SOCIAL_BTN grid w-full grid-cols-2 ">
-            <button className="border-2 p-2 rounded-lg border-black flex justify-center">
+          <div className="E_SOCIAL_BTNS grid grid-cols-2 mt-2 gap-3">
+            <button className="E_SOCIAL_BTN flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
               <svg
                 className="w-5 h-5"
                 aria-hidden="true"
@@ -80,7 +89,7 @@ export default function Enter() {
                 <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
               </svg>
             </button>
-            <button className="border-2 p-2 rounded-lg border-black flex justify-center">
+            <button className="E_SOCIAL_BTN flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
               <svg
                 className="w-5 h-5"
                 aria-hidden="true"
