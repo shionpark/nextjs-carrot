@@ -58,23 +58,25 @@ const Home = () => {
           </Link>
         </div>
       ))}
-      <button className="fixed p-4 bg-orange-400 hover:bg-orange-500 transition-colors cursor-pointer text-white rounded-full shadow-xl right-5 bottom-24">
-        <svg
-          className="h-6 w-6"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-          />
-        </svg>
-      </button>
+      <Link href="/items/upload">
+        <button className="fixed p-4 bg-orange-400 hover:bg-orange-500 transition cursor-pointer text-white rounded-full shadow-xl right-5 bottom-24 hover:-translate-y-1 ease-in-out">
+          <svg
+            className="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+        </button>
+      </Link>
     </div>
   );
 };
