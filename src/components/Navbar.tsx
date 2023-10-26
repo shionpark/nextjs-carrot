@@ -4,6 +4,7 @@ const Navbar = () => {
   return (
     <div className="flex justify-evenly">
       <Link href="/">Home</Link>
+      <Link href="/community">Community</Link>
       <Link href="/enter">Enter</Link>
     </div>
   );
