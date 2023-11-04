@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { cls } from "@/utils";
-import { Input } from "../components";
+import { Button, Input } from "../components";
 import { EMAIL, PHONE } from "@/constants";
 
 interface EnterForm {
@@ -10,6 +10,7 @@ interface EnterForm {
 }
 
 export default function Enter() {
+  const [submitting, setSubmitting] = useState(false);
   const { register, handleSubmit, reset, watch } = useForm<EnterForm>();
   const [method, setMethod] = useState<typeof EMAIL | typeof PHONE>(EMAIL);
 
@@ -25,7 +26,13 @@ export default function Enter() {
   console.log(watch());
 
   const onValid = (data: EnterForm) => {
-    console.log(data);
+    fetch("/api/users/enter", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    }).then(() => {
+      setSubmitting(false);
+    });
   };
 
   return (
@@ -84,10 +91,12 @@ export default function Enter() {
               />
             ) : null}
           </div>
-          <button className="FORM_ENTER_BTN bg-orange-500 hover:bg-orange-600 mt-5 py-2 px-4 border border-transparent rounded-md text-white focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
-            {method === EMAIL ? "Get login link" : null}
-            {method === PHONE ? "Get one-time password" : null}
-          </button>
+          {method === EMAIL ? (
+            <Button text={submitting ? "Loading" : "Get login link"} />
+          ) : null}
+          {method === PHONE ? (
+            <Button text={submitting ? "Loading" : "Get one-time password"} />
+          ) : null}
         </form>
         <div className="E_SOCIAL_CONTAINER mt-8  ">
           <div className="E_SOCIAL_TEXT relative">
