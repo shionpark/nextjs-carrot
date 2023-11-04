@@ -1,3 +1,3 @@
-export const TAB_E = "email";
+export const EMAIL = "email";
 
-export const TAB_P = "phone";
+export const PHONE = "phone";

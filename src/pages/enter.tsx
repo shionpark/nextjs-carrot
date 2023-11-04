@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { cls } from "@/utils";
-import { TAB_E, TAB_P } from "@/constants";
+import { Input } from "../components";
+import { EMAIL, PHONE } from "@/constants";
 
 interface EnterForm {
   email: string;
@@ -10,15 +11,15 @@ interface EnterForm {
 
 export default function Enter() {
   const { register, handleSubmit, reset, watch } = useForm<EnterForm>();
-  const [method, setMethod] = useState<"email" | "phone">("email");
+  const [method, setMethod] = useState<typeof EMAIL | typeof PHONE>(EMAIL);
 
   const onEmailClick = () => {
     reset();
-    setMethod("email");
+    setMethod(EMAIL);
   };
   const onPhoneClick = () => {
     reset();
-    setMethod("phone");
+    setMethod(PHONE);
   };
 
   console.log(watch());
@@ -38,7 +39,7 @@ export default function Enter() {
             <button
               className={cls(
                 "pb-4",
-                method === TAB_E
+                method === EMAIL
                   ? "font-bold text-orange-400 border-b-2 border-orange-500"
                   : "border-transparent hover:text-gray-400 text-gray-500"
               )}
@@ -49,7 +50,7 @@ export default function Enter() {
             <button
               className={cls(
                 "pb-4",
-                method === TAB_P
+                method === PHONE
                   ? "font-bold text-orange-400 border-b-2 border-orange-500"
                   : "border-transparent hover:text-gray-400 text-gray-500"
               )}
@@ -63,36 +64,29 @@ export default function Enter() {
           onSubmit={handleSubmit(onValid)}
           className="FORM_CONTAINER flex flex-col  mt-8"
         >
-          <label className="FORM_LABEL text-sm text-gray-700">
-            {method === TAB_E ? "Email address" : null}
-            {method === TAB_P ? "Phone number" : null}
-          </label>
-          <div className="FORM_INPUTS  ">
-            {method === "email" ? (
-              <input
-                {...register("email", { required: true })}
-                className="FORM_INPUT_E appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                type="email"
+          <div className="FORM_INPUTS">
+            {method === EMAIL ? (
+              <Input
+                register={register(EMAIL, { required: true })}
+                name={EMAIL}
+                label="Email address"
+                type={EMAIL}
                 required
               />
             ) : null}
-            {method === "phone" ? (
-              <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
-                <span className="FORM_INPUT_P_NUM flex items-center justify-center bg-gray-50 text-gray-00 border border-gray-300 border-r-0 px-3 rounded-l-md text-sm ">
-                  +82
-                </span>
-                <input
-                  {...register("phone", { required: true })}
-                  className="FORM_INPUT_P w-full appearance-none border border-gray-300 rounded-md rounded-l-none focus:ring-orange-500 focus:border-orange-500"
-                  type="number"
-                  required
-                />
-              </div>
+            {method === PHONE ? (
+              <Input
+                register={register(PHONE, { required: true })}
+                name={PHONE}
+                label="Phone number"
+                type={PHONE}
+                required
+              />
             ) : null}
           </div>
           <button className="FORM_ENTER_BTN bg-orange-500 hover:bg-orange-600 mt-5 py-2 px-4 border border-transparent rounded-md text-white focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
-            {method === "email" ? "Get login link" : null}
-            {method === TAB_P ? "Get one-time password" : null}
+            {method === EMAIL ? "Get login link" : null}
+            {method === PHONE ? "Get one-time password" : null}
           </button>
         </form>
         <div className="E_SOCIAL_CONTAINER mt-8  ">
