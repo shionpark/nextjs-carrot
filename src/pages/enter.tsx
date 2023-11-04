@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { cls } from "@/utils";
-import { Button, Input } from "../components";
-import { EMAIL, PHONE } from "@/constants";
+import { Button, Input } from "@components";
+import { EMAIL, PHONE } from "@constants";
+import { cls } from "@libs/client/utils";
+import useMutation from "@libs/client/useMutation";
 
 interface EnterForm {
   email: string;
@@ -10,6 +11,7 @@ interface EnterForm {
 }
 
 export default function Enter() {
+  const [enter, { loading, data, error }] = useMutation("/api/users/enter");
   const [submitting, setSubmitting] = useState(false);
   const { register, handleSubmit, reset, watch } = useForm<EnterForm>();
   const [method, setMethod] = useState<typeof EMAIL | typeof PHONE>(EMAIL);
@@ -23,8 +25,6 @@ export default function Enter() {
     setMethod(PHONE);
   };
 
-  console.log(watch());
-
   const onValid = (data: EnterForm) => {
     fetch("/api/users/enter", {
       method: "POST",
@@ -33,6 +33,7 @@ export default function Enter() {
     }).then(() => {
       setSubmitting(false);
     });
+    enter(data);
   };
 
   return (
