@@ -1,11 +1,32 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { cls } from "@/utils";
 import { TAB_E, TAB_P } from "@/constants";
 
+interface EnterForm {
+  email: string;
+  phone: string;
+}
+
 export default function Enter() {
-  const [method, setMethod] = useState<typeof TAB_E | typeof TAB_P>(TAB_E);
-  const onEmailClick = () => setMethod(TAB_E);
-  const onPhoneClick = () => setMethod(TAB_P);
+  const { register, handleSubmit, reset, watch } = useForm<EnterForm>();
+  const [method, setMethod] = useState<"email" | "phone">("email");
+
+  const onEmailClick = () => {
+    reset();
+    setMethod("email");
+  };
+  const onPhoneClick = () => {
+    reset();
+    setMethod("phone");
+  };
+
+  console.log(watch());
+
+  const onValid = (data: EnterForm) => {
+    console.log(data);
+  };
+
   return (
     <div className="SCREEN flex-col px-4 justify-center items-center">
       <h3 className="E_TITLE font-extrabold text-3xl my-16  text-center">
@@ -38,25 +59,30 @@ export default function Enter() {
             </button>
           </div>
         </div>
-        <form className="FORM_CONTAINER flex flex-col  mt-8">
+        <form
+          onSubmit={handleSubmit(onValid)}
+          className="FORM_CONTAINER flex flex-col  mt-8"
+        >
           <label className="FORM_LABEL text-sm text-gray-700">
             {method === TAB_E ? "Email address" : null}
             {method === TAB_P ? "Phone number" : null}
           </label>
           <div className="FORM_INPUTS  ">
-            {method === TAB_E ? (
+            {method === "email" ? (
               <input
+                {...register("email", { required: true })}
                 className="FORM_INPUT_E appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                 type="email"
                 required
               />
             ) : null}
-            {method === TAB_P ? (
+            {method === "phone" ? (
               <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
                 <span className="FORM_INPUT_P_NUM flex items-center justify-center bg-gray-50 text-gray-00 border border-gray-300 border-r-0 px-3 rounded-l-md text-sm ">
                   +82
                 </span>
                 <input
+                  {...register("phone", { required: true })}
                   className="FORM_INPUT_P w-full appearance-none border border-gray-300 rounded-md rounded-l-none focus:ring-orange-500 focus:border-orange-500"
                   type="number"
                   required
