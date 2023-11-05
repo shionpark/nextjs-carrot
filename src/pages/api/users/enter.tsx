@@ -6,24 +6,22 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { phone, email } = req.body;
-  let user;
-  if (email) {
-    user = await client.user.findUnique({
-      where: {
-        email,
-      },
-    });
-    if (user) console.log("found it.");
-    if (!user) {
-      console.log("Did not find. Will create.");
-      user = await client.user.create({
-        data: {
-          name: "Anonymous",
-          email,
-        },
-      });
-    }
-    console.log(user);
-  }
+  const payload = phone ? { phone: +phone } : { email };
+  const user = await client.user.upsert({
+    where: {
+      ...payload,
+      // ...(phone ? {phone: +phone}:{}),
+      // ...(email ? {email}:{})
+    },
+    create: {
+      name: "Anonymous",
+      ...payload,
+      // ...(phone ? {phone: +phone}:{}),
+      // ...(email ? {email}:{})
+    },
+    update: {},
+  });
+  console.log(user);
+
   res.status(200).end();
 }
